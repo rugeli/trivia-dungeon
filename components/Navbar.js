@@ -1,6 +1,11 @@
 import Link from 'next/link'
+import { useContext } from 'react'
+import AuthContext from '../stores/authContext'
 
-const Navbar = () => {
+export default function Navbar() {
+  const user = useContext(AuthContext)
+  console.log(user)
+
   return ( 
     <nav>
       <div className="logo">
@@ -14,5 +19,3 @@ const Navbar = () => {
     </nav>
   );
 }
-
-export default Navbar;
