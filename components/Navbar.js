@@ -3,7 +3,7 @@ import { useContext } from 'react'
 import AuthContext from '../stores/authContext'
 
 export default function Navbar() {
-  const { user, login } = useContext(AuthContext)
+  const { user, login, logout } = useContext(AuthContext)
   console.log(user)
 
   return ( 
@@ -18,6 +18,7 @@ export default function Navbar() {
         <li><Link href="/leaderboard"><a>Leaderboard</a></Link></li>
         {/* <li><Link href="/authentication"><a>LogIn/SignUp</a></Link></li> */}
         <li onClick={login} className="btn">LogIn/SignUp</li>
+        <li onClick={logout} className="btn">Log out</li>
       </ul>
     </nav>
   );
