@@ -1,3 +1,7 @@
+import axios from "axios";
+import AuthContext from "../../stores/authContext";
+
+
 const Quiz = () => {
   return ( 
     <div>
