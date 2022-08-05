@@ -47,13 +47,16 @@ export const AuthContextProvider = ({ children }) => {
       console.log("logout event");
     });
 
-    // init netlify identify connection
-    netlifyIdentity.init();
-
     netlifyIdentity.on("init", () => {
+      setUser(user)
       setAuthReady(true)
       console.log("init event")
     })
+
+    // init netlify identify connection
+    netlifyIdentity.init();
+
+
 
     return () => {
       netlifyIdentity.off("login");
