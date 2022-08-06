@@ -56,8 +56,6 @@ export const AuthContextProvider = ({ children }) => {
     // init netlify identify connection
     netlifyIdentity.init();
 
-
-
     return () => {
       netlifyIdentity.off("login");
       netlifyIdentity.off("logout");
