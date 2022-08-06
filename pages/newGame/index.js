@@ -72,7 +72,10 @@ const QuizItemListing = styled.section`
 
 const BrowseQuizzes = (props) => {
   const categoryList = Object.keys(categories);
-  const categoryItems = categoryList.map( (item) => ( <QuizItem key={Number(item)} description={categories[Number(item)].description} title={categories[Number(item)].title} ctaLink={`/quiz:${Number(item)}`} /> ) );
+  console.log(`categoryList`, categoryList)
+  const categoryItems = categoryList.map( (item) => ( <QuizItem key={Number(item)} title={categories[Number(item)].title} ctaLink={`/quiz:${Number(item)}`} /> ) );
+  console.log(`categoryItems`, categoryItems)
+  console.log(`props`,props)
   return(
       <>
           <QuizItemListWrap>

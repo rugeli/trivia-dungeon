@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import styled from 'styled-components';
-
-import Button from '../components/Button';
+import Button from './Button';
 
 const QuizItemWrap = styled.div`
     background-color: var(--secondary-bg-color);
@@ -29,12 +28,15 @@ const QuizItemWrap = styled.div`
 `
 
 const QuizItem = (props) => {
-    console.log(props)
+    console.log(`in quizItem`, props)
     return(
         <QuizItemWrap>
             <h3 dangerouslySetInnerHTML={{__html: props.title}} />
-            <p dangerouslySetInnerHTML={{__html: props.description}} />
-            <Link to={props.ctaLink} className="cta-button"><Button Label={props.ctaText ? props.ctaText : 'Take Quiz'} /></Link>
+            {/* <Link to={props.ctaLink} className="cta-button">
+              <a>
+                <Button Label={props.ctaText ? props.ctaText : 'Take Quiz'} />
+              </a>
+            </Link> */}
         </QuizItemWrap>
     )
 }
