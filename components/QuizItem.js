@@ -33,7 +33,7 @@ const QuizItem = (props) => {
     return(
         <QuizItemWrap>
             <h3 dangerouslySetInnerHTML={{__html: props.title}} />
-            <Link href="newGame/quiz" passHref>
+            <Link href={{ pathname: '/newGame/quiz', query: { category: JSON.stringify(props.categoryId) } }}>
             <a className={styles.btn1} >  Take Quiz</a>
       </Link>
 
