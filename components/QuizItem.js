@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import styled from 'styled-components';
 import Button from './Button';
+import styles from '../styles/Home.module.css'
 
 const QuizItemWrap = styled.div`
     background-color: var(--secondary-bg-color);
@@ -32,11 +33,10 @@ const QuizItem = (props) => {
     return(
         <QuizItemWrap>
             <h3 dangerouslySetInnerHTML={{__html: props.title}} />
-            {/* <Link to={props.ctaLink} className="cta-button">
-              <a>
-                <Button Label={props.ctaText ? props.ctaText : 'Take Quiz'} />
-              </a>
-            </Link> */}
+            <Link href="newGame/quiz" passHref>
+            <a className={styles.btn1} >  Take Quiz</a>
+      </Link>
+
         </QuizItemWrap>
     )
 }
