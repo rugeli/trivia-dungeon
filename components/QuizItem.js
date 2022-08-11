@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import styled from 'styled-components';
-import Button from './Button';
 import styles from '../styles/Home.module.css'
 
 const QuizItemWrap = styled.div`
@@ -34,7 +33,7 @@ const QuizItem = (props) => {
         <QuizItemWrap>
             <h3 dangerouslySetInnerHTML={{__html: props.title}} />
             <Link href={{ pathname: '/newGame/quiz', query: { category: JSON.stringify(props.categoryId) } }}>
-            <a className={styles.btn1} >  Take Quiz</a>
+            <a className={styles.btn1}>  Take Quiz</a>
       </Link>
 
         </QuizItemWrap>

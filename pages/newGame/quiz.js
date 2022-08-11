@@ -1,7 +1,9 @@
 import { useRouter } from "next/router";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useContext } from "react";
 import styled from "styled-components";
-import Link from 'next/link'
+import Link from "next/link";
+import AuthContext from "../../stores/authContext";
+import axios from "axios";
 
 const QuizQuestionsWrap = styled.div`
   text-align: center;
@@ -62,6 +64,8 @@ const QuizQuestionOption = styled.button`
 `;
 
 const QuizQuestionScreen = () => {
+  const { user } = useContext(AuthContext);
+  console.log(`in quiz---`, user);
   const { query } = useRouter();
   console.log(`category`, query.category);
   const [questions, setQuestions] = useState("");
@@ -69,8 +73,9 @@ const QuizQuestionScreen = () => {
   const category = useMemo(() => query.category, [query]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [correctAnswers, setCorrectAnswers] = useState(0);
-  const [lives, setLives] = useState(3);
+  const [lives, setLives] = useState(5);
   const [isGameOver, setIsGameOver] = useState(false);
+  // const [user, setUser] =useState(null);
 
   useEffect(fetchQuestions, [category]);
   useEffect(() => {
@@ -79,9 +84,13 @@ const QuizQuestionScreen = () => {
     }
   }, [currentQuestion]);
 
+  //   const escapeHtml = (str) => {
+  //     return str.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, "\"").replace(/&#039;/g, "'")
+  // }
+
   function fetchQuestions() {
     fetch(
-      `https://opentdb.com/api.php?amount=10&category=${category}&type=multiple`
+      `https://opentdb.com/api.php?amount=10&category=${category}&difficulty=easy&type=multiple`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -98,6 +107,44 @@ const QuizQuestionScreen = () => {
       });
   }
 
+  // useEffect(saveUserRecord, []);
+
+  const saveUserRecord = (user) => {
+    const userRecord = {
+      highest_score: correctAnswers,
+      highest_category: category,
+    };
+    axios
+      .put(`http://127.0.0.1:5000/users/${user.id}`, userRecord, {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+        },
+      })
+      .then((res) => res.json())
+      .catch((error) => console.log("error", error));
+  };
+
+  // }
+
+  // useEffect(() => {
+  //   const userRecord = {
+  //     score: correctAnswers,
+  //     category: category
+  //   }
+  //   if (isGameOver && user) {
+  //     axios
+  //       .patch(
+  //         `http://127.0.0.1:5000/${user.id}`,
+  //         {
+  //           userRecord,
+  //         },
+  //       )
+  //       .then((data) => console.log("data", JSON.stringify(data)))
+  //       .catch((error) => console.log("error", JSON.stringify(error), error));
+  //   }
+
+  // }, []);
+
   const submitAnswer = (answer) => {
     if (answer === questions[currentQuestion]["correct_answer"]) {
       setCorrectAnswers(correctAnswers + 1);
@@ -105,8 +152,12 @@ const QuizQuestionScreen = () => {
       setLives(lives - 1);
       setIsGameOver(lives - 1 === 0);
     }
-    if (!isGameOver) {
+    console.log(">>> isGameOver", isGameOver);
+    if (lives - 1 > 0) {
       setCurrentQuestion(currentQuestion + 1);
+    } else {
+      console.log(">>> saveUserRecord");
+      saveUserRecord(user);
     }
   };
 
@@ -116,27 +167,59 @@ const QuizQuestionScreen = () => {
         <h2>
           Game over ! Final score: {correctAnswers} / {questions.length}
         </h2>
-        <p>Go back to the <Link href="/"><button>Homepage</button></Link></p>
+        {user && <h3>Record has been successfully updated.</h3>}
+        <Link href="/">
+          <button>Play Again</button>
+        </Link>
       </div>
     );
   }
+
+  // if (isGameOver && !user) {
+  //   return(
+  //       <div>
+  //         <h2>
+  //           Game over ! Final score: {correctAnswers} / {questions.length}
+  //         </h2>
+  //         <p>Go back to the <Link href="/"><button>Homepage</button></Link></p>
+  //       </div>
+  //     );
+  //   } else {
+  //     saveUserRecord(user.id)
+  //     return(
+  //       <div>
+  //         <h2>
+  //           Game over ! Final score: {correctAnswers} / {questions.length}
+  //         </h2>
+  //         <h3>
+  //           record successfully updated.
+  //         </h3>
+  //       </div>
+  //     )
+  //   }
+
   // console.log(">> questions", questions);
   return (
     <QuizQuestionsWrap>
+      <header>
+        <h2>
+          Score: {correctAnswers} / {questions.length}
+        </h2>
+        <h2>Remaining: {lives}</h2>
+      </header>
       {questions?.length > 0 && (
         <div className="wrapper">
           <QuizQuestion>
-            
-              <h2>
-                Score: {correctAnswers} / {questions.length}
-              </h2>
-              <h2>Remaining: {lives}</h2>
             <QuizQuestionHeading>
-              <h3>{questions[currentQuestion].question}</h3>
+              {questions[currentQuestion].question}
+              {/* {escapeHtml} */}
             </QuizQuestionHeading>
             <QuizQuestionOptionsWrap>
               {questions[currentQuestion]["possible_answers"].map((answer) => (
-                <QuizQuestionOption key={answer} onClick={() => submitAnswer(answer)}>
+                <QuizQuestionOption
+                  key={answer}
+                  onClick={() => submitAnswer(answer)}
+                >
                   {answer}
                 </QuizQuestionOption>
               ))}
