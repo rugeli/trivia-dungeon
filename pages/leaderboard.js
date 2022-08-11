@@ -7,7 +7,7 @@ const Leaderboard = () => {
 
   useEffect(() => {
     axios
-      .get(`http://127.0.0.1:5000/users/leader/board`)
+      .get(`http://127.0.0.1:5000/users/leaderboard`)
       .then((res) => setBoard(res.data))
       .catch((error) => console.log("error", error));
   }, []);

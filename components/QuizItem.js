@@ -28,13 +28,13 @@ const QuizItemWrap = styled.div`
 `
 
 const QuizItem = (props) => {
-    console.log(`in quizItem`, props)
+    // console.log(`in quizItem`, props)
     return(
         <QuizItemWrap>
             <h3 dangerouslySetInnerHTML={{__html: props.title}} />
             <Link href={{ pathname: '/newGame/quiz', query: { category: JSON.stringify(props.categoryId) } }}>
-            <a className={styles.btn1}>  Take Quiz</a>
-      </Link>
+              <a className={styles.btn1}>Take Quiz</a>
+            </Link>
 
         </QuizItemWrap>
     )

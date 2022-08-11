@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import { useEffect, useMemo, useState, useContext } from "react";
+import { decode, decodeEntity } from "html-entities";
 import styled from "styled-components";
 import Link from "next/link";
 import AuthContext from "../../stores/authContext";
@@ -65,169 +66,149 @@ const QuizQuestionOption = styled.button`
 
 const QuizQuestionScreen = () => {
   const { user } = useContext(AuthContext);
-  console.log(`in quiz---`, user);
+  // console.log(`in quiz---`, user);
   const { query } = useRouter();
-  console.log(`category`, query.category);
+  // console.log(`category`, query.category);
   const [questions, setQuestions] = useState("");
-  // const [status, setStatus] = useState("fetching");
   const category = useMemo(() => query.category, [query]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [lives, setLives] = useState(5);
   const [isGameOver, setIsGameOver] = useState(false);
-  // const [user, setUser] =useState(null);
+  const [isOutQuestion, setIsOutQuestion] = useState(false);
+  const [gameEndingMessage, setGameEndingMessage] = useState("");
+  const [gameToken, setGameToken] = useState("");
 
-  useEffect(fetchQuestions, [category]);
+  useEffect(() => {
+    fetchToken();
+  }, []);
+
   useEffect(() => {
     if (currentQuestion % 10 === 8) {
-      fetchQuestions();
+      fetchQuestions(gameToken);
     }
   }, [currentQuestion]);
 
-  //   const escapeHtml = (str) => {
-  //     return str.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, "\"").replace(/&#039;/g, "'")
-  // }
 
-  function fetchQuestions() {
+  const fetchToken = () => {
+    fetch("https://opentdb.com/api_token.php?command=request")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("token", data);
+        fetchQuestions(data.token);
+        setGameToken(data.token);
+      });
+  };
+
+  const fetchQuestions = (token) => {
     fetch(
-      `https://opentdb.com/api.php?amount=10&category=${category}&difficulty=easy&type=multiple`
+      `https://opentdb.com/api.php?amount=10&category=${category}&type=multiple&token=${token}`
     )
       .then((res) => res.json())
       .then((data) => {
-        setQuestions([
-          ...questions,
-          ...data.results.map((result) => ({
-            ...result,
-            possible_answers: [
-              ...result["incorrect_answers"],
-              result["correct_answer"],
-            ].sort(() => Math.random() - 0.5),
-          })),
-        ]);
+        if (data.response_code === 0) {
+          setQuestions([
+            ...questions,
+            ...data.results.map((result) => ({
+              ...result,
+              possible_answers: [
+                ...result["incorrect_answers"],
+                result["correct_answer"],
+              ].sort(() => Math.random() - 0.5),
+            })),
+          ]);
+        } else {
+          setIsOutQuestion(true);
+          setGameEndingMessage("Out of Questions");
+          setIsGameOver(true);
+        }
       });
-  }
-
-  // useEffect(saveUserRecord, []);
+  };
 
   const saveUserRecord = (user) => {
     const userRecord = {
       highest_score: correctAnswers,
       highest_category: category,
     };
-    axios
-      .put(`http://127.0.0.1:5000/users/${user.id}`, userRecord, {
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-        },
-      })
-      .then((res) => res.json())
-      .catch((error) => console.log("error", error));
+    if (user) {
+      axios
+        .put(`http://127.0.0.1:5000/users/${user.id}`, userRecord, {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+          },
+        })
+        .then((res) => res.json())
+        .catch((error) => console.log("error 1", error));
+    }
   };
 
-  // }
-
-  // useEffect(() => {
-  //   const userRecord = {
-  //     score: correctAnswers,
-  //     category: category
-  //   }
-  //   if (isGameOver && user) {
-  //     axios
-  //       .patch(
-  //         `http://127.0.0.1:5000/${user.id}`,
-  //         {
-  //           userRecord,
-  //         },
-  //       )
-  //       .then((data) => console.log("data", JSON.stringify(data)))
-  //       .catch((error) => console.log("error", JSON.stringify(error), error));
-  //   }
-
-  // }, []);
-
   const submitAnswer = (answer) => {
+    // console.log(">> questions", questions);
+    let localLives = lives;
     if (answer === questions[currentQuestion]["correct_answer"]) {
       setCorrectAnswers(correctAnswers + 1);
     } else {
-      setLives(lives - 1);
-      setIsGameOver(lives - 1 === 0);
+      localLives = localLives - 1;
+      setLives(localLives);
+      setIsGameOver(localLives === 0);
     }
-    console.log(">>> isGameOver", isGameOver);
-    if (lives - 1 > 0) {
+
+    if (localLives > 0) {
       setCurrentQuestion(currentQuestion + 1);
     } else {
-      console.log(">>> saveUserRecord");
       saveUserRecord(user);
     }
+
+    setLives(localLives);
   };
 
-  if (isGameOver) {
-    return (
-      <div>
-        <h2>
-          Game over ! Final score: {correctAnswers} / {questions.length}
-        </h2>
-        {user && <h3>Record has been successfully updated.</h3>}
-        <Link href="/">
-          <button>Play Again</button>
-        </Link>
-      </div>
-    );
-  }
-
-  // if (isGameOver && !user) {
-  //   return(
-  //       <div>
-  //         <h2>
-  //           Game over ! Final score: {correctAnswers} / {questions.length}
-  //         </h2>
-  //         <p>Go back to the <Link href="/"><button>Homepage</button></Link></p>
-  //       </div>
-  //     );
-  //   } else {
-  //     saveUserRecord(user.id)
-  //     return(
-  //       <div>
-  //         <h2>
-  //           Game over ! Final score: {correctAnswers} / {questions.length}
-  //         </h2>
-  //         <h3>
-  //           record successfully updated.
-  //         </h3>
-  //       </div>
-  //     )
-  //   }
-
-  // console.log(">> questions", questions);
   return (
-    <QuizQuestionsWrap>
-      <header>
-        <h2>
-          Score: {correctAnswers} / {questions.length}
-        </h2>
-        <h2>Remaining: {lives}</h2>
-      </header>
-      {questions?.length > 0 && (
-        <div className="wrapper">
-          <QuizQuestion>
-            <QuizQuestionHeading>
-              {questions[currentQuestion].question}
-              {/* {escapeHtml} */}
-            </QuizQuestionHeading>
-            <QuizQuestionOptionsWrap>
-              {questions[currentQuestion]["possible_answers"].map((answer) => (
-                <QuizQuestionOption
-                  key={answer}
-                  onClick={() => submitAnswer(answer)}
-                >
-                  {answer}
-                </QuizQuestionOption>
-              ))}
-            </QuizQuestionOptionsWrap>
-          </QuizQuestion>
+    <>
+      {isGameOver ? (
+        <div>
+          {!isOutQuestion ? (
+            <h2>Game over ! Final score: {correctAnswers}</h2>
+          ) : (
+            <h2>{gameEndingMessage}</h2>
+          )}
+          {user && <h3>Record has been successfully updated.</h3>}
+          <Link href="/">
+            <button>Play Again</button>
+          </Link>
         </div>
+      ) : (
+        <QuizQuestionsWrap>
+          <header>
+            <h2>
+              {/* Score: {correctAnswers} / {questions.length} */}
+              Score: {correctAnswers}
+            </h2>
+            <h2>Remaining chances: {lives} / 5 </h2>
+          </header>
+          {questions?.length > 0 && (
+            <div className="wrapper">
+              <QuizQuestion>
+                <QuizQuestionHeading>
+                  {decode(questions[currentQuestion].question)}
+                </QuizQuestionHeading>
+                <QuizQuestionOptionsWrap>
+                  {questions[currentQuestion]["possible_answers"].map(
+                    (answer) => (
+                      <QuizQuestionOption
+                        key={answer}
+                        onClick={() => submitAnswer(answer)}
+                      >
+                        {decode(answer)}
+                      </QuizQuestionOption>
+                    )
+                  )}
+                </QuizQuestionOptionsWrap>
+              </QuizQuestion>
+            </div>
+          )}
+        </QuizQuestionsWrap>
       )}
-    </QuizQuestionsWrap>
+    </>
   );
 };
 
