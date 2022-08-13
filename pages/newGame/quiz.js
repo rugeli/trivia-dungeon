@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useEffect, useMemo, useState, useContext } from "react";
-import { decode, decodeEntity } from "html-entities";
+import { decode} from "html-entities";
 import styled from "styled-components";
 import Link from "next/link";
 import AuthContext from "../../stores/authContext";
@@ -63,6 +63,7 @@ const QuizQuestionOption = styled.button`
     width: 100%;
   }
 `;
+
 
 const QuizQuestionScreen = () => {
   const { user } = useContext(AuthContext);
