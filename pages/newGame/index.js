@@ -2,39 +2,8 @@
 // import { useEffect, useState } from "react";
 import categories from "../../utils/categories";
 import QuizItem from '../../components/QuizItem';
-import styled from 'styled-components';
+import styles from '../../styles/Home.module.css'
 
-const QuizItemListWrap = styled.section`
-    background-color: var(--main-bg-color);
-    padding: 55px 15px;
-    h2 {
-        font-size: 30px;
-        text-transform: capitalize;
-        text-align: center;
-        margin-bottom: 45px;
-    }
-    @media screen and (max-width:480px) {
-        h2{
-            font-size: 28px;
-        }
-    }
-`
-
-const QuizItemListing = styled.section`
-    display: flex;
-    flex-wrap: wrap;
-    > div {
-        margin: 0 10px 20px 10px;
-        width: calc(33.33333% - 20px);
-    }
-    @media screen and (max-width:768px) {
-        flex-direction: column;
-        > div {
-            width: 100%;
-            margin: 0 0 25px 0;
-        } 
-    }
-`
 
 const BrowseQuizzes = () => {
     const categoryList = Object.keys(categories);
@@ -44,14 +13,14 @@ const BrowseQuizzes = () => {
     // console.log(`props`,props)
     return(
         <>
-            <QuizItemListWrap>
-                <div className="wrapper">
-                    <h2>Select any quiz category</h2>
-                    <QuizItemListing>
+            <section>
+                <div>
+                    <h2 className={styles.cate_page_title}>Select any quiz category</h2>
+                    <section className={styles.cate_container}>
                         {categoryItems}
-                    </QuizItemListing>
+                    </section>
                 </div>
-            </QuizItemListWrap>
+            </section>
         </>
     )
 }

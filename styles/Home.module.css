@@ -28,5 +28,74 @@
   text-align: center;
 }
 
+.cate_container {
+  /* border: 1px solid red; */
+  /* display: flex; */
+  flex-wrap: wrap;
+  justify-content:center; 
+  columns: 3 auto;
+}
+
+.cate_page_title {
+  font-size: 30px;
+  text-transform: capitalize;
+  text-align: center;
+  margin-bottom: 45px;
+}
+
+.quiz_item {
+  /* border: 1px solid green; */
+  padding: 20px;
+  text-align: center;
+  border-radius: 4px;
+}
+
+.question_wrap {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.options_wrap {
+  display: flex;
+  flex-flow: row;
+  flex-wrap: wrap;
+}
+
+.question_text {
+  font-size: 28px;
+  margin-bottom: 25px;
+  text-align: center;
+  @media screen and (max-width: 560px) {
+    font-size: 22px;
+  }
+}
+
+.question_body {
+  display: flex;
+  flex-flow: column;
+  padding: 15px;
+}
+
+.option_btn {
+  width: 46%;
+  margin: 0 2% 2%;
+  border: 2px solid transparent;
+  border-radius: 4px;
+  transition: all ease 0.2s;
+  cursor: pointer;
+  background-color: var(--main-bg-color);
+  color: var(--main-text-color);
+  padding: 10px 15px;
+  font-size: 13px;
+  white-space: pre-wrap;
+  letter-spacing: 0;
+}
+
+.option_btn:hover {
+  border-color: var(--main-text-color);
+}
+
 
 /* only use classes in this file */

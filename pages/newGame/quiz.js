@@ -1,69 +1,10 @@
 import { useRouter } from "next/router";
 import { useEffect, useMemo, useState, useContext } from "react";
 import { decode} from "html-entities";
-import styled from "styled-components";
+import styles from '../../styles/Home.module.css'
 import Link from "next/link";
 import AuthContext from "../../stores/authContext";
 import axios from "axios";
-
-const QuizQuestionsWrap = styled.div`
-  text-align: center;
-  background-color: var(--main-bg-color);
-  display: flex;
-  flex-flow: column;
-  align-items: center;
-  justify-content: center;
-  min-height: calc(100vh - 132px);
-`;
-const QuizQuestion = styled.div`
-  display: flex;
-  flex-flow: column;
-  background-color: var(--secondary-bg-color);
-  border-radius: 4px;
-  padding: 15px;
-  .answer_block {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    margin: 0;
-    flex-wrap: wrap;
-  }
-`;
-const QuizQuestionHeading = styled.h2`
-  font-size: 28px;
-  margin-bottom: 25px;
-  text-align: center;
-  @media screen and (max-width: 560px) {
-    font-size: 22px;
-  }
-`;
-const QuizQuestionOptionsWrap = styled.div`
-  display: flex;
-  flex-flow: row;
-  flex-wrap: wrap;
-`;
-
-const QuizQuestionOption = styled.button`
-  width: 46%;
-  margin: 0 2% 2%;
-  border: 2px solid transparent;
-  border-radius: 4px;
-  transition: all ease 0.2s;
-  cursor: pointer;
-  background-color: var(--main-bg-color);
-  color: var(--main-text-color);
-  padding: 10px 15px;
-  font-size: 13px;
-  white-space: pre-wrap;
-  letter-spacing: 0;
-  &:hover {
-    border-color: var(--main-text-color);
-  }
-  @media screen and (max-width: 560px) {
-    width: 100%;
-  }
-`;
-
 
 const QuizQuestionScreen = () => {
   const { user } = useContext(AuthContext);
@@ -178,7 +119,7 @@ const QuizQuestionScreen = () => {
           </Link>
         </div>
       ) : (
-        <QuizQuestionsWrap>
+        <div className={styles.question_wrap}>
           <header>
             <h2>
               {/* Score: {correctAnswers} / {questions.length} */}
@@ -188,26 +129,26 @@ const QuizQuestionScreen = () => {
           </header>
           {questions?.length > 0 && (
             <div className="wrapper">
-              <QuizQuestion>
-                <QuizQuestionHeading>
+              <div className={styles.question_body}>
+                <h2 className={styles.question_text}>
                   {decode(questions[currentQuestion].question)}
-                </QuizQuestionHeading>
-                <QuizQuestionOptionsWrap>
+                </h2>
+                <div className={styles.options_wrap}>
                   {questions[currentQuestion]["possible_answers"].map(
                     (answer) => (
-                      <QuizQuestionOption
+                      <button className={styles.option_btn}
                         key={answer}
                         onClick={() => submitAnswer(answer)}
                       >
                         {decode(answer)}
-                      </QuizQuestionOption>
+                      </button>
                     )
                   )}
-                </QuizQuestionOptionsWrap>
-              </QuizQuestion>
+                </div>
+              </div>
             </div>
           )}
-        </QuizQuestionsWrap>
+        </div>
       )}
     </>
   );

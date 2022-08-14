@@ -62,6 +62,12 @@ nav li.btn:hover {
 nav .logo {
   margin-right: auto;
 }
+
+h3 {
+  font-size: 18px;
+  min-height: 36px;
+}
+
 footer {
   display: block;
   text-align: center;
