@@ -8,9 +8,9 @@ export default function Home() {
       <div id={styles.tagline}>
         <div className={styles.visible}>
           <ul>
-            <li>It's fun.</li>
-            <li>It's relaxing.</li>
-            <li>It's good for brain.</li>
+            <li>It&apos;s fun.</li>
+            <li>It&apos;s relaxing.</li>
+            <li>It&apos;s good for brain.</li>
           </ul>
         </div>
       </div>
