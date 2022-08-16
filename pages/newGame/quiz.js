@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useEffect, useMemo, useState, useContext } from "react";
-import { decode} from "html-entities";
-import styles from '../../styles/Home.module.css'
+import { decode } from "html-entities";
+import styles from "../../styles/Home.module.css";
 import Link from "next/link";
 import AuthContext from "../../stores/authContext";
 import axios from "axios";
@@ -30,7 +30,6 @@ const QuizQuestionScreen = () => {
       fetchQuestions(gameToken);
     }
   }, [currentQuestion]);
-
 
   const fetchToken = () => {
     fetch("https://opentdb.com/api_token.php?command=request")
@@ -74,11 +73,15 @@ const QuizQuestionScreen = () => {
     };
     if (user) {
       axios
-        .put(`https://trivia-dungeon-backend.herokuapp.com/${user.id}`, userRecord, {
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-          },
-        })
+        .put(
+          `https://trivia-dungeon-backend.herokuapp.com/users/${user.id}`,
+          userRecord,
+          {
+            headers: {
+              "Access-Control-Allow-Origin": "*",
+            },
+          }
+        )
         .then((res) => res.json())
         .catch((error) => console.log("error 1", error));
     }
@@ -136,7 +139,8 @@ const QuizQuestionScreen = () => {
                 <div className={styles.options_wrap}>
                   {questions[currentQuestion]["possible_answers"].map(
                     (answer) => (
-                      <button className={styles.option_btn}
+                      <button
+                        className={styles.option_btn}
                         key={answer}
                         onClick={() => submitAnswer(answer)}
                       >

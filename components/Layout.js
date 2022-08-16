@@ -3,10 +3,13 @@ import Footer from "./Footer"
 
 const Layout = ({ children }) => {
   return ( 
-    <div className="content">
-      <Navbar/>
-      { children }
-      <Footer/>
+    <div>
+      <video src="/beach.mp4" autoPlay muted/>
+      <div className="content">
+        <Navbar/>
+        { children }
+        <Footer/>
+      </div>
     </div>
   );
 }

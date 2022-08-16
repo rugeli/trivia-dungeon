@@ -5,6 +5,7 @@ export default function Home() {
   return (
     <div className={styles.landing_page}>
       {/* <p className={styles.text}>It's fun and it's good for you.</p> */}
+      {/* <video src="/beach.mp4" autoPlay loop muted/> */}
       <div id={styles.tagline}>
         <div className={styles.visible}>
           <ul>
