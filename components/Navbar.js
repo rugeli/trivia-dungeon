@@ -35,7 +35,6 @@ export default function Navbar() {
                 LogIn/SignUp
               </li>
             )}
-            {user && <li>Hi! {user.user_metadata.full_name}</li>}
             {user && (
               <li onClick={logout} className="btn">
                 Log out
@@ -44,6 +43,7 @@ export default function Navbar() {
           </ul>
         )}
       </nav>
+      {user && <h3 className="username">Hi! {user.user_metadata.full_name}</h3>}
     </div>
   );
 }

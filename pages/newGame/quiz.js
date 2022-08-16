@@ -88,7 +88,7 @@ const QuizQuestionScreen = () => {
   };
 
   const submitAnswer = (answer) => {
-    // console.log(">> questions", questions);
+    console.log(">> questions", questions);
     let localLives = lives;
     if (answer === questions[currentQuestion]["correct_answer"]) {
       setCorrectAnswers(correctAnswers + 1);

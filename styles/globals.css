@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap');
 
 :root {
-  --primary: black;
+  --primary: white;
 }
 
 body {
@@ -37,6 +37,7 @@ nav {
   justify-content: flex-end;
   align-items: flex-end;
   border-bottom: 1px solid #ddd;
+  flex-wrap: wrap;
 }
 nav a {
   margin-left: 12px;
@@ -176,4 +177,8 @@ footer p {
 .not-found a{
   color: #4979ff;
   text-decoration: underline;
+}
+
+.username {
+  text-align: center;
 }
