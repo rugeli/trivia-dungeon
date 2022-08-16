@@ -20,7 +20,7 @@ export const AuthContextProvider = ({ children }) => {
       netlifyIdentity.close();
       console.log("login event");
       console.log(user);
-      const createUser = "http://127.0.0.1:5000/users";
+      const createUser = "https://trivia-dungeon-backend.herokuapp.com/users";
       const postUser = {
         netlify_id: user.id,
         name: user.user_metadata.full_name,

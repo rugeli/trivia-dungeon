@@ -74,7 +74,7 @@ const QuizQuestionScreen = () => {
     };
     if (user) {
       axios
-        .put(`http://127.0.0.1:5000/users/${user.id}`, userRecord, {
+        .put(`https://trivia-dungeon-backend.herokuapp.com/${user.id}`, userRecord, {
           headers: {
             "Access-Control-Allow-Origin": "*",
           },
@@ -115,7 +115,7 @@ const QuizQuestionScreen = () => {
           )}
           {user && <h3>Record has been successfully updated.</h3>}
           <Link href="/">
-            <button>Play Again</button>
+            <button className={styles.btn2}>Play Again</button>
           </Link>
         </div>
       ) : (
