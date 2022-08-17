@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Image from "next/image";
+// import Image from "next/image";
 import { useContext } from "react";
 import AuthContext from "../stores/authContext";
 
@@ -14,7 +14,7 @@ export default function Navbar() {
         <div className="logo">
           <h1>
             <Link href="/">
-              <a>Trivia Dungeon</a>
+              <a>Trivia Ocean</a>
             </Link>
           </h1>
         </div>
@@ -43,7 +43,7 @@ export default function Navbar() {
           </ul>
         )}
       </nav>
-      {user && <h3 className="username">Hi! {user.user_metadata.full_name}</h3>}
+      {user && <h2 className="username">Hi! {user.user_metadata.full_name}</h2>}
     </div>
   );
 }

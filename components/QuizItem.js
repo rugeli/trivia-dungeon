@@ -2,7 +2,6 @@ import Link from 'next/link';
 import styles from '../styles/Home.module.css'
 
 const QuizItem = (props) => {
-    // console.log(`in quizItem`, props)
     return(
         <div className={styles.quiz_item}>
             <h3 dangerouslySetInnerHTML={{__html: props.title}} />

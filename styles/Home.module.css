@@ -1,15 +1,14 @@
-.title {
+/* .title {
   color: #333;
   padding-bottom: 20px;
   text-align: center;
 }
 .text {
-  color: #777;
-}
+  color: #ffffff;
+} */
 
 
 .landing_page{
-  border: 1px solid red;
   display: flex;
   flex-wrap: wrap;
   justify-content:space-around; 
@@ -42,7 +41,7 @@
 }
 #tagline:after,
 #tagline:before {
-  color: black;
+  color: var(--primary);
   font-size: 42px;
   animation-name:				opacity;
   animation-duration:			12s;
@@ -137,15 +136,16 @@
 	100%	{margin-top: 0;}
 }
 
-.btn {
+/* .btn {
   display: block;
   width: 150px;
   padding: 8px 0;
   margin: 20px auto;
   border-radius: 4px;
-  color: black;
+  color: var(--primary);
   text-align: center;
   margin-top: 30em;
+  background: transparent;
 }
 
 .btn:hover {
@@ -157,6 +157,27 @@
   transition: all .3s;
   border: 2px solid transparent;
   cursor: pointer;
+} */
+
+.btn {
+  padding: 10px 16px;
+  border: 1px solid var(--primary);
+  border-radius: 4px;
+  font-weight: 600;
+  color: var(--primary);
+  cursor: pointer;
+  margin-top: 30em;
+  background: transparent;
+  font-family: "Nunito";
+}
+.btn:hover {
+  color:#ffffff;
+  background: linear-gradient(0deg, rgba(0,172,238,1) 0%, rgba(2,126,251,1) 100%);
+  box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+  7px 7px 20px 0px rgba(0,0,0,.1),
+  4px 4px 5px 0px rgba(0,0,0,.1);
+  transition: all .3s;
+  border: 2px solid transparent;
 }
 
 .btn1{
@@ -174,7 +195,7 @@
   line-height: 42px;
   -webkit-perspective: 230px;
   perspective: 230px;
-  color: #ffffff
+  color: var(--primary)
 }
 
 .btn1 span {
@@ -242,6 +263,7 @@
   border-radius: 4px;
   color: var(--primary);
   text-align: center;
+  background: transparent;
 }
 
 .btn2:hover {
@@ -258,8 +280,6 @@
 
 
 .cate_container {
-  border: 1px solid red;
-  /* display: flex; */
   flex-wrap: wrap;
   justify-content:space-around; 
   columns: 3 auto;
@@ -274,7 +294,6 @@
 }
 
 .quiz_item {
-border: 1em solid #f2f2f2;
 padding: 20px;
 text-align: center;
 border-radius: 4px;
@@ -313,7 +332,7 @@ line-height: 2.5ex;
 .option_btn {
   width: 46%;
   margin: 0 2% 2%;
-  border: 2px solid (--main-text-color);
+  border: 2px solid #ffffff;
   border-radius: 4px;
   transition: all ease 0.2s;
   cursor: pointer;

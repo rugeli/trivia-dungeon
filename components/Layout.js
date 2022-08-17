@@ -4,7 +4,7 @@ import Footer from "./Footer"
 const Layout = ({ children }) => {
   return ( 
     <div>
-      <video src="/beach.mp4" autoPlay muted/>
+      <video src="/blue.mp4" autoPlay muted/>
       <div className="content">
         <Navbar/>
         { children }
