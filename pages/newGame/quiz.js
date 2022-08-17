@@ -35,7 +35,7 @@ const QuizQuestionScreen = () => {
     fetch("https://opentdb.com/api_token.php?command=request")
       .then((res) => res.json())
       .then((data) => {
-        console.log("token", data);
+        // console.log("token", data);
         fetchQuestions(data.token);
         setGameToken(data.token);
       });
@@ -88,7 +88,7 @@ const QuizQuestionScreen = () => {
   };
 
   const submitAnswer = (answer) => {
-    console.log(">> questions", questions);
+    // console.log(">> questions", questions);
     let localLives = lives;
     if (answer === questions[currentQuestion]["correct_answer"]) {
       setCorrectAnswers(correctAnswers + 1);
@@ -125,7 +125,6 @@ const QuizQuestionScreen = () => {
         <div className={styles.question_wrap}>
           <header>
             <h2>
-              {/* Score: {correctAnswers} / {questions.length} */}
               Score: {correctAnswers}
             </h2>
             <h2>Remaining chances: {lives} / 5 </h2>

@@ -18,8 +18,8 @@ export const AuthContextProvider = ({ children }) => {
     netlifyIdentity.on("login", (user) => {
       setUser(user);
       netlifyIdentity.close();
-      console.log("login event");
-      console.log(user);
+      // console.log("login event");
+      // console.log(user);
       const createUser = "https://trivia-dungeon-backend.herokuapp.com/users";
       const postUser = {
         netlify_id: user.id,
@@ -38,19 +38,19 @@ export const AuthContextProvider = ({ children }) => {
             },
           }
         )
-        .then((data) => console.log("data", JSON.stringify(data)))
+        .then((data) => console.log("data saved"))
         .catch((error) => console.log("error", JSON.stringify(error), error));
     });
 
     netlifyIdentity.on("logout", () => {
       setUser(null);
-      console.log("logout event");
+      // console.log("logout event");
     });
 
     netlifyIdentity.on("init", () => {
       setUser(user)
       setAuthReady(true)
-      console.log("init event")
+      // console.log("init event")
     })
 
     // init netlify identify connection
