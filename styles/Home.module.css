@@ -169,6 +169,7 @@
   margin-top: 30em;
   background: transparent;
   font-family: "Nunito";
+  width: 180px;
 }
 .btn:hover {
   color:#ffffff;

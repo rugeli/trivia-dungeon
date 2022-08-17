@@ -60,7 +60,7 @@ const QuizQuestionScreen = () => {
           ]);
         } else {
           setIsOutQuestion(true);
-          setGameEndingMessage("Out of Questions");
+          setGameEndingMessage("WoW...Out of Questions");
           setIsGameOver(true);
         }
       });
