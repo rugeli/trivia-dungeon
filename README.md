@@ -45,5 +45,6 @@ The `pages/api` directory is mapped to `/api/*`. Files in this directory are tre
 
 ## Contact 
 - Personal Email: rugeli0605@gmail.com
+- Co-creator's Email: andrewzihaoli@gmail.com
 - Trivia Ocean Backend Link: https://github.com/rugeli/back-end-trivia-dungeon
 - Trivia Ocean Frontend Link: https://github.com/rugeli/trivia-ocean 
